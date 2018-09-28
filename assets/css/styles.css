@@ -5,7 +5,7 @@ body, head {
 }
 
 h1, p, h3{
-    background:url(../../White-Texture-Background-03458.jpg)no-repeat center center fixed;
+    background:url(../../White-Texture-Background-03458.jpg)fixed;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 }
