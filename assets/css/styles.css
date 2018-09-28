@@ -1,11 +1,11 @@
 body, head {
-    background:url(../../black.jpg)no-repeat center center fixed;
+    background:url(../images/black.jpg)no-repeat center center fixed;
     text-align: center;
     font-family: 'Righteous', cursive;
 }
 
 h1, p, h3{
-    background:url(../../White-Texture-Background-03458.jpg)fixed;
+    background:url(../images/white.jpg)fixed;
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
 }
