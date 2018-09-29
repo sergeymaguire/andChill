@@ -10,22 +10,22 @@ $("#find-movie").on("click", function (event) {
     };
     firebase.initializeApp(config);
     var database = firebase.database();
-
+ 
     event.preventDefault();
-
+ 
     var movie = $("#movie-input").val();
     if (!movie) return;
-
+ 
     var queryURL = "https://utelly-tv-shows-and-movies-availability-v1.p.mashape.com/lookup?";
-
-    var queryString = queryURL + "country=" + "uk" + "&term=" + movie;
+ 
+    var queryString = queryURL + "country=" + "us"  + "&term=" + movie;
     getMovies(queryString);
-
+ 
     // -----------------------------------------------------------------------
-
-});
-
-function getMovies(queryURL) {
+ 
+ });
+ 
+ function getMovies(queryURL) {
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -40,13 +40,14 @@ function getMovies(queryURL) {
             $("#movies").append(html);
         };
     });
-};
-
-function buildHtml(results) {
+ };
+ 
+ function buildHtml(results) {
     var html = "<ul>";
     for (var i = 0; i < results.length; i++) {
-        html = html + "<li>" + "<img src='" + results[i].picture + "'></li>";
+        html = html + "<li>" + "<img src='" + results[i].picture +  "'<p>" + results[0].name + "</p>'" + "<a href=" + results[0].locations[0].url + ">click here</a>"
+        "'></li>";
     };
     html = html + "</ul>";
     return html;
-}
+ }
