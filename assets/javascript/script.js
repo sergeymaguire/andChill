@@ -18,7 +18,7 @@ $("#find-movie").on("click", function (event) {
  
     var queryURL = "https://utelly-tv-shows-and-movies-availability-v1.p.mashape.com/lookup?";
  
-    var queryString = queryURL + "country=" + "uk" + "&term=" + movie;
+    var queryString = queryURL + "country=" + "us" + "&term=" + movie;
     getMovies(queryString);
  
     // -----------------------------------------------------------------------
@@ -45,7 +45,8 @@ $("#find-movie").on("click", function (event) {
  function buildHtml(results) {
     var html = "<ul>";
     for (var i = 0; i < results.length; i++) {
-        html = html + "<li>" + "<img src='" + results[i].picture + "'></li>";
+        html = html + "<li>" + "<h4>" + results[i].name + "</h4><a href=" + results[i].locations[0].url + "><img src=" + results[i].picture +
+          "></a>" + "<p>" + results[i].locations[0].display_name + "</p></li>";
     };
     html = html + "</ul>";
     return html;
