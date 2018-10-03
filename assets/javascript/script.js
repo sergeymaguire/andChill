@@ -1,19 +1,38 @@
 $(document).ready(function () {
     var config = {
-      apiKey: "AIzaSyBXh_OSGPOTI4ZxdxcJL5dcV3oByDTTVwc",
-      authDomain: "andchill-eb480.firebaseapp.com",
-      databaseURL: "https://andchill-eb480.firebaseio.com",
-      projectId: "andchill-eb480",
-      storageBucket: "andchill-eb480.appspot.com",
-      messagingSenderId: "198184378958"
-    };
-    firebase.initializeApp(config);
+        apiKey: "AIzaSyBiqaBPPDQ81tqrLcrkt7GeMJYVL_WdEwE",
+        authDomain: "andchill-55616.firebaseapp.com",
+        databaseURL: "https://andchill-55616.firebaseio.com",
+        projectId: "andchill-55616",
+        storageBucket: "andchill-55616.appspot.com",
+        messagingSenderId: "866283270828"
+      };
+      firebase.initializeApp(config);
+
+
     var database = firebase.database();
+
+    database.ref().orderByChild("dateAdded").limitToLast(4).on("child_added", function (snapshot) {  
+        var recentname = snapshot.val().name;
+         var recentImage = snapshot.val().Image;
+         var recentFind = snapshot.val().FindOn;
+        var recentMovies = "<div class='recentSearch col-lg-3 col-md-3 col-xs-6'>" + "<h4>" + recentname + "</h4><img src=" + recentImage + "><p>Find on: " + recentFind + "</p></div>";
+      
+        $("#recent").append(recentMovies);
+    
+    }, function (errorObject) {
+        console.log("Errors handled: " + errorObject.code);
+    });
+
   
     $("#find-movie").on("click", function (event) {
       var movieSearch = $("#movie-input")
         .val()
         .trim();
+
+
+       
+
   
       event.preventDefault();
   
@@ -49,25 +68,11 @@ $(document).ready(function () {
   
       for (var i = 0; i < results.length; i++) {
         if (results[i].picture) {
-          html =
-            html +
-            "<div class='col-lg-3 col-md-4 col-xs-6'>" +
-            "<img src='" +
-            results[i].picture +
-            "'><div>" +
-            results[i].name +
-            "</div>Showing at: " +
-            getLocationsHtml(results[i].locations) +
-            "</div>";
+          html = html + "<div class='currentSearch col-lg-3 col-md-4 col-xs-6'><h4>" + results[i].name + "</h4><img src=" + results[i].picture + "><p>Showing at: " +
+            getLocationsHtml(results[i].locations) + "</p></div>";
         } else {
-          html =
-            html +
-            "<div class='col-lg-3 col-md-4 col-xs-6'>" +
-            "<div>" +
-            results[i].name +
-            "</div>Showing at: " +
-            getLocationsHtml(results[i].locations) +
-            "</div>";
+            html = html + "<div class='currentSearch col-lg-3 col-md-4 col-xs-6'><h4>" + results[i].name + "</h4><p>Showing at: " +
+            getLocationsHtml(results[i].locations) + "</p></div>";
         }
       }
       html = html + "</div>";
@@ -90,13 +95,12 @@ $(document).ready(function () {
     }
   
     function addMoviesToFirebase(results) {
-      for (var i = 0; i < results.length; i++) {
         database.ref().push({
-          name: results[i].name,
-          FindOn: results[i].locations[0].display_name,
-          Image: results[i].picture,
+          name: results[0].name,
+          FindOn: results[0].locations[0].display_name,
+          Image: results[0].picture,
         });
-      }
+      
     }
   });
   
