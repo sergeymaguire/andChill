@@ -5,7 +5,7 @@ body, head {
     color:white;
 }
 
-h1, p, h3{
+h1, h3{
     
     text-align: center;
     max-width: 1200px;
@@ -30,6 +30,9 @@ h1{
 
 h3{
     margin-bottom: 20px;
+}
+h4{
+    text-align: center
 }
 
 img {
@@ -110,3 +113,20 @@ input:focus, textarea:focus {
     background: #000;
     color   : #FFF;
   } */
+  
+.takeout{ 
+    font-family: 'Times New Roman', Times, serif;
+    text-align: justify;
+    line-height: 200%;
+    display: inline;
+    position: relative;
+    padding: 5px 5px;
+    top: 5px;
+    font-size: 16px;
+
+}
+
+.resturant{
+    font-size: 20px;
+    text-decoration-line: underline;
+}
