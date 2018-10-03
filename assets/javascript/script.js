@@ -26,16 +26,10 @@ $(document).ready(function () {
 
   
     $("#find-movie").on("click", function (event) {
+      event.preventDefault();
       var movieSearch = $("#movie-input")
         .val()
         .trim();
-
-
-       
-
-  
-      event.preventDefault();
-  
       if (!movieSearch) return;
       var queryURL =
         "https://utelly-tv-shows-and-movies-availability-v1.p.mashape.com/lookup?";
@@ -54,6 +48,7 @@ $(document).ready(function () {
         }
       }).success(function (response) {
         console.log(response);
+        $('#recent').children().first().remove()
         $("#movies").empty();
         if ($.isArray(response.results) && response.results.length) {
           var html = buildHtml(response.results);
@@ -166,7 +161,7 @@ $(document).ready(function () {
   
         for (var i = 0; i < response.length; i++) {
           var html = ""
-          html = html + "<p class='name'>" + response[i].name + "</p>" + "<p class='address'>" + response[i].location.address1 + "</p>" + "<p class='phone'>" + response[i].display_phone + "</p>" + "<p class='price'>" + response[i].price + "</p>"
+          html = html + "<div class='food'><p class='name'>" + response[i].name + "</p>" + "<p class='address'>" + response[i].location.address1 + "</p>" + "<p class='phone'>" + response[i].display_phone + "</p>" + "<p class='price'>" + response[i].price + "</p></div>"
           $("#restaurant").append(html);
         }
       });
