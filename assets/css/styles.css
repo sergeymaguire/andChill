@@ -5,11 +5,18 @@ body, head {
     color:white;
 }
 
-h1, p, h3{
+h1, h3{
     
     text-align: center;
     max-width: 1200px;
     margin: auto;
+}
+.currentSearch, .recentSearch {
+    margin-bottom: 30px;
+}
+
+.food{
+    margin:20px;
 }
 
 h5 {
@@ -23,6 +30,9 @@ h1{
 
 h3{
     margin-bottom: 20px;
+}
+h4{
+    text-align: center
 }
 
 img {
@@ -39,6 +49,7 @@ img {
 li{
     display: inline;
 }
+
 img {
     display: inline-block;
     position: relative;
@@ -63,7 +74,7 @@ img {
             transition: all 0.2s ease;
   }
   
-  img:hover {
+  /* img:hover {
     top: -10px;
     box-shadow: 0px 10px 10px rgba( 15, 165, 60, 0.2 );
     
@@ -71,16 +82,13 @@ img {
        -moz-transform: rotateX(20deg);
         -ms-transform: rotateX(20deg);
             transform: rotateX(20deg);
-  }
-  
+
   img:active {
     top: 0px;
     box-shadow: 0px 0px 0px rgba(165, 63, 15, 0);
     background: rgb(224, 186, 20);
-  }
-body{
-    background-color: beige;
-}
+  } */
+
 input:focus, textarea:focus {
     background: #000;
     border-radius: 5px;
@@ -89,6 +97,7 @@ input:focus, textarea:focus {
     font-size: 19px;
   }
 
+/* 
   button {
     font         : bold .6em sans-serif;
     border       : 2px solid #333;
@@ -103,4 +112,21 @@ input:focus, textarea:focus {
     outline   : none;
     background: #000;
     color   : #FFF;
-  }
+  } */
+  
+.takeout{ 
+    font-family: 'Times New Roman', Times, serif;
+    text-align: justify;
+    line-height: 200%;
+    display: inline;
+    position: relative;
+    padding: 5px 5px;
+    top: 5px;
+    font-size: 16px;
+
+}
+
+.resturant{
+    font-size: 20px;
+    text-decoration-line: underline;
+}
