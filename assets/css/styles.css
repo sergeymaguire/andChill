@@ -5,6 +5,9 @@ body, head {
     max-width: 1200px;
     margin: auto;
 }
+#name, #address, #phone, #price{
+    margin: 5px 5px
+}
 
 p{
     margin-bottom: 80px;
@@ -73,6 +76,7 @@ img {
 body{
     background-color: beige;
 }
+
 input:focus, textarea:focus {
     background: #000;
     border-radius: 5px;
@@ -89,6 +93,27 @@ input:focus, textarea:focus {
     cursor       : pointer;
   
   }
+  .loader {
+    border: 16px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 16px solid #3498db;
+    width: 120px;
+    height: 120px;
+    -webkit-animation: spin 2s linear infinite; /* Safari */
+    animation: spin 2s linear infinite;
+    margin: auto;
+  }
+  
+  /* Safari */
+  @-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
 
   button:hover,
   button:focus {
@@ -96,3 +121,11 @@ input:focus, textarea:focus {
     background: #000;
     color   : #FFF;
   }
+  @media only screen and (max-width: 768px) {
+
+    p {
+      margin: 5px 5px;
+      color: rgb(128, 128, 128);
+    } 
+  
+}
