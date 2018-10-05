@@ -3,42 +3,53 @@
 
 <head>
     <meta charset="utf-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>&amp;chill</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+        crossorigin="anonymous">
     <script src="https://www.gstatic.com/firebasejs/5.5.2/firebase.js"></script>
     <link rel="stylesheet" type="text/css" href="assets/css/styles.css">
     </link>
     <link href="https://fonts.googleapis.com/css?family=Righteous" rel="stylesheet">
+
+
+
 </head>
 
 <body>
-<div class="container">          
-    <h1 id="topText">&amp;chill</h1>
-    <p>searching media streaming and takeout near you so you have more time to chill</p>
-    <form>
-        <div class="input-group">
-            <input type="text" id="movie-input" class="form-control" required placeholder="whatcha feelin?" name="search">
-            <div class="input-group-btn">
-                <button id="find-movie" class="btn btn-default" type="submit">
-                    <i class="glyphicon glyphicon-search"></i>
-                </button>
 
-            </div>
+    <div class="container">
+
+        <h1 id="topText">&amp;chill</h1>
+        <h5>searching media streaming and takeout near you so you have more time to chill</h5>
+
+        <h3>everyone else is watching</h3>
+
+        <div class="container">
+            <div id="recent"></div>
         </div>
-    </form>
-    <div class="loader" style="display: none;"></div>
-    <div id="movies"></div>
-    <div id="restaurant"></div>
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
-    <script type="text/javascript" src="assets/javascript/script.js"></script>
-    <!--Loads the google makes api and makes a callback to initMap-->
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB8oKKFdugWo4hKPNthhL1ouMovHmJ_Is&callback=initMap">
-    </script>
+
+        <form>
+            <div class="input-group">
+                <input type="text" id="movie-input" class="form-control" required placeholder="whatcha feelin?" name="search">
+                <div class="input-group-btn">
+                    <button id="find-movie" class="btn btn-default" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </form>
+        <div class="loader" style="display: none;"></div>
+        <div id="movies"></div>
+        <br>
+        <br>
+        <h3 id="food">Takeout near you</h3>
+        <div id="restaurant"></div>
+
+        <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.js"></script>
+        <script type="text/javascript" src="assets/javascript/script.js?v=1"></script>
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDB8oKKFdugWo4hKPNthhL1ouMovHmJ_Is&callback=initMap">
+        </script>
     </div>
-</div>
 </body>
+
 </html>

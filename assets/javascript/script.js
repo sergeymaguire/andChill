@@ -3,63 +3,115 @@
 //Step 3. get the first zip code found in the nearby locations of the current user
 //Put on global level to be used later in function(Get zip code)
 //This is called from the index.html script link
-var geocoder;
-function initMap() {
-  geocoder = new google.maps.Geocoder(); // sets geocoder
+
+function getZipCode(geocoder, lat, long) {
+  var latlng = {
+    lat: lat,
+    lng: long
+  };
+  showLoading();
+  //geocoder = new google.maps.Geocoder();
+  geocoder.geocode(
+    //uses the global geocoder variable object
+    {
+      location: latlng
+    },
+    function(results, status) {
+      if (status === "OK") {
+        if (results[0]) {
+          for (j = 0; j < results[0].address_components.length; j++) {
+            if (results[0].address_components[j].types[0] == "postal_code") {
+              zip = results[0].address_components[j].short_name;
+              //above is waiting for the zipcode to return before setting up the click events
+              zipCodeReady();
+            }
+          }
+        }
+      }
+      hideLoading();
+    }
+  );
 }
-$(document).ready(function() {
-  var lat, long, zip; //these are set and used
-  //Step 2. gets the current lat and long with the built in navigator(the browser object) function
+
+function initMap() {
+  var geocoder = new google.maps.Geocoder(); // sets geocoder
   navigator.geolocation.getCurrentPosition(function(position) {
     console.log(position);
     lat = position.coords.latitude; // sets global lat variable used in getzipcode function
     lng = position.coords.longitude; //sets global long variable used in getzipcode function
-    getZipCode(lat, lng);
+    getZipCode(geocoder, lat, lng);
   });
+}
+var lat, long, zip; //these are set and used
+//Step 2. gets the current lat and long with the built in navigator(the browser object) function
+//$(document).ready(function() {
 
-  function getZipCode(lat, long) {
-    var latlng = {
-      lat: lat,
-      lng: long
-    };
-    showLoading();
-    geocoder.geocode(
-      //uses the global geocoder variable object
-      {
-        location: latlng
-      },
-      function(results, status) {
-        if (status === "OK") {
-          if (results[0]) {
-            for (j = 0; j < results[0].address_components.length; j++) {
-              if (results[0].address_components[j].types[0] == "postal_code") {
-                zip = results[0].address_components[j].short_name;
-                //above is waiting for the zipcode to return before setting up the click events
-                zipCodeReady();
-              }
-            }
-          }
+var config = {
+  apiKey: "AIzaSyBXh_OSGPOTI4ZxdxcJL5dcV3oByDTTVwc",
+  authDomain: "andchill-eb480.firebaseapp.com",
+  databaseURL: "https://andchill-eb480.firebaseio.com",
+  projectId: "andchill-eb480",
+  storageBucket: "andchill-eb480.appspot.com",
+  messagingSenderId: "198184378958"
+};
+firebase.initializeApp(config);
+var database = firebase.database();
+
+function addMoviesToFirebase(results) {
+  for (var i = 0; i < results.length; i++) {
+    database.ref().push({
+      name: results[i].name,
+      FindOn: results[i].locations[0].display_name,
+      Image: results[i].picture
+    });
+  }
+}
+function addRecentSearch() {
+  database
+    .ref()
+    .orderByChild("dateAdded")
+    .limitToLast(4)
+    .on(
+      "child_added",
+      function(snapshot) {
+        var recentname = snapshot.val().name;
+        var recentImage = snapshot.val().Image;
+        var recentFind = snapshot.val().FindOn;
+        var recentMovies = "";
+        if (recentImage) {
+          recentMovies =
+            "<div class='recentSearch col-lg-3 col-md-3 col-xs-6'>" +
+            "<h4>" +
+            recentname +
+            "</h4><img src=" +
+            recentImage +
+            "><p>Find on: " +
+            recentFind +
+            "</p></div>";
+        } else {
+          recentMovies =
+            "<div class='recentSearch col-lg-3 col-md-3 col-xs-6'>" +
+            "<h4>" +
+            recentname +
+            "</h4>Find on: " +
+            recentFind +
+            "</p></div>";
         }
-        hideLoading();
+        $("#recent").append(recentMovies);
+      },
+      function(errorObject) {
+        console.log("Errors handled: " + errorObject.code);
       }
     );
-  }
+}
 
-  var config = {
-    apiKey: "AIzaSyBXh_OSGPOTI4ZxdxcJL5dcV3oByDTTVwc",
-    authDomain: "andchill-eb480.firebaseapp.com",
-    databaseURL: "https://andchill-eb480.firebaseio.com",
-    projectId: "andchill-eb480",
-    storageBucket: "andchill-eb480.appspot.com",
-    messagingSenderId: "198184378958"
-  };
-  firebase.initializeApp(config);
-  var database = firebase.database();
+addRecentSearch(); //Show list of last four movies above
+$("#food").hide();
 
-  function zipCodeReady() {
-    $("#find-movie").on("click", getRestaurantsFromYelp); //going to call getfood function on the click event
-    $("#find-movie").on("click", movieSearch); //Can not execute these until the zip code is returned in the above function where zipCodeReady() is being called.
-  }
+function zipCodeReady() {
+  // used this instead of a d
+  $("#find-movie").on("click", getRestaurantsFromYelp); //going to call getfood function on the click event
+  $("#find-movie").on("click", movieSearch); //Can not execute these until the zip code is returned in the above function where zipCodeReady() is being called.
 
   function movieSearch(event) {
     var movieSearch = $("#movie-input")
@@ -91,6 +143,8 @@ $(document).ready(function() {
         var html = buildMovieHtml(response.results);
         $("#movies").append(html);
         addMoviesToFirebase(response.results);
+        $("#recent").empty();
+        addRecentSearch(); //add the newest searched movie to the recent div
       }
     });
   }
@@ -140,23 +194,6 @@ $(document).ready(function() {
     return html;
   }
 
-  function addMoviesToFirebase(results) {
-    for (var i = 0; i < results.length; i++) {
-      database.ref().push({
-        name: results[i].name,
-        FindOn: results[i].locations[0].display_name,
-        Image: results[i].picture
-      });
-    }
-  }
-  function showLoading() {
-    //shows the loading icon when waiting for movies or restaurants to return
-    $(".loader").show();
-  }
-  function hideLoading() {
-    //hides the loading icon when the movies or restaurants return
-    $(".loader").hide();
-  }
   function getRestaurantsFromYelp() {
     if (!zip) {
       alert("No zip code");
@@ -201,4 +238,14 @@ $(document).ready(function() {
       });
     });
   }
-});
+  //});
+}
+
+function showLoading() {
+  //shows the loading icon when waiting for movies or restaurants to return
+  $(".loader").show();
+}
+function hideLoading() {
+  //hides the loading icon when the movies or restaurants return
+  $(".loader").hide();
+}
